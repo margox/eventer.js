@@ -42,12 +42,16 @@
             return false;
         }
 
-
+        this.__object     = object;
         object.__events__ = {};
         object.on       = this.__on;
         object.off      = this.__off;
         object.trigger  = this.__trigger;
 
+    }
+
+    Eventer.prototype.getObject = function() {
+        return this.__object;
     }
 
     /**
@@ -129,7 +133,7 @@
      * @param  {object} object 需要绑定Eventer功能的对象
      */
     return function (object) {
-        new Eventer(object);
+        return new Eventer(object).getObject();
     }
 
 });
