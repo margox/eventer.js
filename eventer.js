@@ -50,6 +50,10 @@
 
     }
 
+    /**
+     * 用于获取传入的对象
+     * @return {object} 返回绑定事件模块之后的对象
+     */
     Eventer.prototype.getObject = function() {
         return this.__object;
     }
