@@ -5,20 +5,29 @@
  * @date    2016/02
  */
 
-(function(root, factory){
+(function(factory){
 
     /*
      * 添加UMD支持
      */
-    if (typeof exports === 'object') {
-        module.exports = factory;
-    } else if (typeof define === 'function' && define.amd) {
-        define(factory);
-    } else {
-        root.Eventer = factory();
+
+    var host;
+
+    if (typeof window !== undefined) {
+        host = window;
+    } else if (typeof root !== undefined) {
+        host = root;
     }
 
-})(window, function() {
+    if (typeof exports === 'object') {
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if (host) {
+        host.Eventer = factory();
+    }
+
+})(function() {
 
     'use strict';
 
