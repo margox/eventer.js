@@ -49,6 +49,8 @@ obj_margox.on({
 ## 发布事件
 通过trigger方法来发布（触发）一个事件
 ```javascript
+obj_margox.trigger('grow'); // Margox is 27 years old.
+
 obj_margox
     .trigger('hungry') // Margox is hungry!
     .trigger('tired') // Margox need a rest!
