@@ -30,7 +30,7 @@ Eventer(obj_margox);
 // 订阅单个事件
 obj_margox.on('grow', function() {
     this.age = this.age + 1;
-    console.log(this.name + '现在年龄是:' + this.age);
+    console.log(this.name + ' is ' + this.age + 'years old.');
 });
 
 // 订阅多个事件
@@ -50,14 +50,14 @@ obj_margox.on({
 通过trigger方法来发布（触发）一个事件
 ```javascript
 obj_margox
-.trigger('hungry') // Margox is hungry!
-.trigger('tired') // Margox need a rest!
-.trigger('eat', 'breads'); // Margox just ate some breads
+    .trigger('hungry') // Margox is hungry!
+    .trigger('tired') // Margox need a rest!
+    .trigger('eat', 'breads'); // Margox just ate some breads
 ```
 ## 取消事件订阅
 通过off方法来取消订阅指定的事件
 ```javascript
 obj_margox
-.off('hungry') // 取消订阅hungry事件
-.trigger('hungry'); // nothing
+    .off('hungry') // 取消订阅hungry事件
+    .trigger('hungry'); // nothing
 ```
