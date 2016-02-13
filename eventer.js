@@ -28,13 +28,13 @@
      */
     function Eventer(object) {
 
-        if (typeof object !== 'object' || object instanceof Eventer || object.__events || object.on || object.off || object.trigger) {
+        if (typeof object !== 'object' || object instanceof Eventer || object.__events__ || object.on || object.off || object.trigger) {
             throw 'Unable to bind object to Eventer.';
             return false;
         }
 
 
-        object.__events = {};
+        object.__events__ = {};
         object.on       = this.__on;
         object.off      = this.__off;
         object.trigger  = this.__trigger;
@@ -42,9 +42,9 @@
     }
 
     /**
-     * 用来注册事件，可单个或者多个
-     * @param  {string | object} eventName 事件名，注册单个事件时为一个字符串，注册多个事件则需要传入一个包含事件名/函数的键值对
-     * @param  {function} method 事件函数，仅注册单个事件时才需要
+     * 用来订阅事件，可单个或者多个
+     * @param  {string | object} eventName 事件名，订阅单个事件时为一个字符串，订阅多个事件则需要传入一个包含事件名/函数的键值对
+     * @param  {function} method 事件函数，仅订阅单个事件时才需要
      * @return {object} 返回自身以便于链式调用
      */
     Eventer.prototype.__on = function(eventName, method) {
@@ -61,8 +61,8 @@
 
         } else if (typeof eventName === "string" && typeof method === "function") {
 
-            this.__events[eventName] || (this.__events[eventName] = []);
-            this.__events[eventName].push(method);
+            this.__events__[eventName] || (this.__events__[eventName] = []);
+            this.__events__[eventName].push(method);
 
         }
 
@@ -78,7 +78,7 @@
     Eventer.prototype.__off = function(eventName) {
 
         if (typeof eventName === 'string') {
-            this.__events[eventName] = [];
+            this.__events__[eventName] = [];
         }
 
         return this;
@@ -86,8 +86,8 @@
     }
 
     /**
-     * 用于触发一个指定的事件
-     * @param {string | ...any} 传入的第一个参数为需要触发的事件明，其后的参数会传递给事件队列中的每个函数
+     * 用于发布一个指定的事件
+     * @param {string | ...any} 传入的第一个参数为需要发布的事件明，其后的参数会传递给事件队列中的每个函数
      * @return {object} 返回自身以便于链式调用
      */
     Eventer.prototype.__trigger = function() {
@@ -98,16 +98,20 @@
             __that = this,
             __return;
 
-        if (typeof __eventName === 'string' && Object.prototype.hasOwnProperty.call(this.__events, __eventName) && (this.__events[__eventName] instanceof Array)) {
+        if (typeof __eventName === 'string' && Object.prototype.hasOwnProperty.call(this.__events__, __eventName) && (this.__events__[__eventName] instanceof Array)) {
 
-            this.__events[__eventName].forEach(function(method) {
-                __return = method.apply(__that, __arguments);
-                __return === false && (__returnFalse = true);
+            this.__events__[__eventName].forEach(function(method) {
+
+                if (!__returnFalse) {
+                    __return = method.apply(__that, __arguments);
+                    __return === false && (__returnFalse = true);
+                }
+
             });
 
         }
 
-        return __returnFalse ? false : this;
+        return this;
 
     }
 
