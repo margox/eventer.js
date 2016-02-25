@@ -11,20 +11,14 @@
      * 添加UMD支持
      */
 
-    var host;
-
-    if (typeof window !== undefined) {
-        host = window;
-    } else if (typeof root !== undefined) {
-        host = root;
-    }
+    var root = root || window;
 
     if (typeof exports === 'object') {
         module.exports = factory();
     } else if (typeof define === 'function' && define.amd) {
         define(factory);
-    } else if (host) {
-        host.Eventer = factory();
+    } else if (root) {
+        root.Eventer = factory();
     }
 
 })(function() {
@@ -38,7 +32,7 @@
     function Eventer(object) {
 
         if (typeof object !== 'object' || object instanceof Eventer || object.__events__ || object.on || object.off || object.trigger) {
-            throw 'Unable to bind object to Eventer.';
+            throw new TypeError('Unable to bind object to Eventer.');
             return false;
         }
 
