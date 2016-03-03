@@ -31,6 +31,10 @@
      */
     function Eventer(object) {
 
+        if (!this instanceof Eventer) {
+            return new Eventer(object);
+        }
+
         if (typeof object !== 'object' || object instanceof Eventer || object.__events__ || object.on || object.off || object.trigger) {
             throw new TypeError('Unable to bind object to Eventer.');
             return false;
@@ -126,12 +130,6 @@
 
     }
 
-    /**
-     * 执行实例化
-     * @param  {object} object 需要绑定Eventer功能的对象
-     */
-    return function (object) {
-        return new Eventer(object).getObject();
-    }
+    return Eventer;
 
 });
