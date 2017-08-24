@@ -31,7 +31,7 @@
      */
     function Eventer(object) {
 
-        if (!this instanceof Eventer) {
+        if (!(this instanceof Eventer)) {
             return new Eventer(object);
         }
 
